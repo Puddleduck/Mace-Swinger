@@ -32,6 +32,8 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.swing.JFrame;
@@ -202,9 +204,21 @@ public class GameClient {
 		client.stop();
 		exit(0);
 	}
+	
+	public void givenUsingTimer_whenSchedulingRepeatedTask_thenCorrect(){
+	    TimerTask repeatedTask = new TimerTask() {
+	        public void run() {
+	            System.out.println(fps);
+	        }
+	    };
+	    Timer fpsTimer = new Timer("Timer");
+	     
+	    long delay  = 1000;
+	    long period = 10000;
+	    fpsTimer.scheduleAtFixedRate(repeatedTask, delay, period);
+	}
 
 	private void tick() {
-		//System.out.println(fps);
 		if (!Sound.isPlaying[1] && Keyboard.isKeyDown(Keyboard.KEY_P))
 			Sound.play(1, 1);
 		if (Sound.isPlaying[1] && Keyboard.isKeyDown(Keyboard.KEY_O))
